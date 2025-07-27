@@ -1,21 +1,19 @@
 import { useState, useEffect } from "react";
-
 const SearchBar = ({ value, onChange, onSearch }) => {
     const [inputValue, setInputValue] = useState("");
 
     const handleInputChange = (e) => {
         const val = e.target.value;
         setInputValue(val);
-        onChange(val); // notify parent
+        onChange(val); // update parent
     };
 
-    // Trigger search when input changes (live)
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
             if (inputValue.trim()) {
-                onSearch(); // uses updated query from parent
+                onSearch(inputValue); // pass live value
             }
-        }, 400); // debounce delay
+        }, 400);
 
         return () => clearTimeout(delayDebounce);
     }, [inputValue, onSearch]);
@@ -23,7 +21,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (inputValue.trim()) {
-            onSearch(); // manual submit
+            onSearch(inputValue); // pass latest input value directly
         }
     };
 
@@ -41,7 +39,7 @@ const SearchBar = ({ value, onChange, onSearch }) => {
             />
             <button
                 type="submit"
-                className="bg-amber-700  text-white px-4 py-2 rounded-md hover:bg-amber-800 transition"
+                className="bg-amber-700 text-white px-4 py-2 rounded-md hover:bg-amber-800 transition"
             >
                 Search
             </button>
