@@ -36,3 +36,4 @@ export const getAllCategories = async () => {
     const response = await api.get(`categories.php`);
     return response.data;
 };
+export default api;

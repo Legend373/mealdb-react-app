@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../service/mealApi";
 
 const MealDetail = () => {
     const { id } = useParams();
@@ -11,8 +12,8 @@ const MealDetail = () => {
     useEffect(() => {
         const fetchMeal = async () => {
             try {
-                const res = await axios.get(
-                    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+                const res = await api.get(
+                    `/lookup.php?i=${id}`
                 );
                 const fetchedMeal = res.data.meals?.[0] || null;
                 setMeal(fetchedMeal);

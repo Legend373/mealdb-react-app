@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MealCard from "./MealCard";
-import axios from "axios";
+
+import api from "../service/mealApi";
 
 const RandomMealGenerator = () => {
     const [meal, setMeal] = useState(null);
@@ -13,7 +14,7 @@ const RandomMealGenerator = () => {
         setMeal(null);
 
         try {
-            const res = await axios.get("https://www.themealdb.com/api/json/v1/1/random.php");
+            const res = await api.get("/random.php");
             setMeal(res.data.meals[0]);
         } catch (err) {
             console.error(err);
